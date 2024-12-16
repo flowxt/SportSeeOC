@@ -1,0 +1,15 @@
+{
+    "userId": 12,
+    "sessions": [
+      { "day": "1", "kilogram": 70, "calories": 240 },
+      { "day": "2", "kilogram": 69, "calories": 220 },
+      { "day": "3", "kilogram": 69, "calories": 280 },
+      { "day": "4", "kilogram": 70, "calories": 500 },
+      { "day": "5", "kilogram": 69, "calories": 160 },
+      { "day": "6", "kilogram": 69, "calories": 162 },
+      { "day": "7", "kilogram": 68, "calories": 390 },
+      { "day": "8", "kilogram": 69, "calories": 160 },
+      { "day": "9", "kilogram": 69, "calories": 162 },
+      { "day": "10", "kilogram": 68, "calories": 140 }
+    ]
+  }

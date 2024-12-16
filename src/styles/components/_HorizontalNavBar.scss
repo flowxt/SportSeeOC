@@ -1,0 +1,52 @@
+.container-navHorizontal {
+    display: flex;
+    align-items: center;
+    background: black;
+    padding: 30px;
+    width: 100%;
+box-shadow: 1px 4px 10px 0 rgba(0, 0, 0, 0.3);
+
+    .logo {
+        color: red;
+        display: flex;
+        align-items: center;
+
+        img {
+            background: red;
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        h1 {
+            font-weight: 400;
+
+            @media (max-width: 768px) {
+                font-size: 1.4rem;
+            }
+        }
+    }
+
+    .horizontal-nav-bar {
+        color: white;
+        margin-left: 30px;
+        flex: 1; 
+
+        ul {
+            display: flex;
+            justify-content: space-between; 
+            width: 100%; 
+            padding: 0; 
+            margin: 0;
+           
+
+                li {
+                    list-style: none;
+                    text-align: center;
+                    flex: 1;
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                }
+            }
+        }
+    }

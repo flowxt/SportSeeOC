@@ -1,0 +1,29 @@
+@mixin verticalCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .main-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* La page occupe toute la hauteur */
+}
+
+.main-content {
+    display: flex;
+    flex: 1; /* Cette section occupe tout l'espace restant sous la barre horizontale */
+}
+
+.dashboard {
+    flex: 1; /* Cette section s'étend dans l'espace central */
+    padding: 20px;
+    background: #f5f5f5; /* Couleur de fond pour démarquer le contenu */
+}

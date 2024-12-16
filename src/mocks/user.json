@@ -1,0 +1,15 @@
+{
+    "id": 12,
+    "userInfos": {
+      "firstName": "Thomas",
+      "lastName": "Durand",
+      "age": 34
+    },
+    "todayScore": 0.75,
+    "keyData": {
+      "calorieCount": 2000,
+      "proteinCount": 120,
+      "carbohydrateCount": 140,
+      "lipidCount": 50
+    }
+  }
