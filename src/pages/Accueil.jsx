@@ -3,6 +3,7 @@ import HorizontalNavBar from '../components/HorizontalNavBar';
 import VerticalNavBar from '../components/VerticalNavBar';
 import UserInfo from '../components/UserInfo';
 import DailyActivity from '../components/DailyActivity';
+import Graphics from '../components/Graphics';
 
 const Accueil = () => {
     return (
@@ -19,6 +20,9 @@ const Accueil = () => {
                 {/* Ici, je vais pouvoir ajouter mes composants graphiques */}
                 <UserInfo />
                 <DailyActivity />
+            </div>
+            <div className='linechart'>
+               <Graphics />
             </div>
         </div>
     </div>
