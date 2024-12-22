@@ -5,6 +5,7 @@ import UserInfo from '../components/UserInfo';
 import DailyActivity from '../components/DailyActivity';
 import Graphics from '../components/Graphics';
 import RadarChartComponent from '../components/RadarChart';
+import NutriCards from '../components/NutriCards';
 
 const Accueil = () => {
     return (
@@ -23,6 +24,9 @@ const Accueil = () => {
                 <DailyActivity />
                 <Graphics />
                 <RadarChartComponent />
+            <div>
+                <NutriCards />
+            </div>
             </div>
            
         </div>
