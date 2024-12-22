@@ -4,6 +4,7 @@ import VerticalNavBar from '../components/VerticalNavBar';
 import UserInfo from '../components/UserInfo';
 import DailyActivity from '../components/DailyActivity';
 import Graphics from '../components/Graphics';
+import RadarChartComponent from '../components/RadarChart';
 
 const Accueil = () => {
     return (
@@ -20,10 +21,10 @@ const Accueil = () => {
                 {/* Ici, je vais pouvoir ajouter mes composants graphiques */}
                 <UserInfo />
                 <DailyActivity />
+                <Graphics />
+                <RadarChartComponent />
             </div>
-            <div className='linechart'>
-               <Graphics />
-            </div>
+           
         </div>
     </div>
 );
