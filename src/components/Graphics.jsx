@@ -20,37 +20,37 @@ const Graphics = () => {
         <div className="average-session-chart">
           <h2 className="chart-title">Durée moyenne des sessions</h2>
           {data.length > 0 ? (
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
+            <ResponsiveContainer width="100%" height="80%">
+              <LineChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
                 {/* Axe X : Jours */}
                 <XAxis
                   dataKey="day"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 12, fill: '#FFFFFF' }}
+                  tick={{ fontSize: 10, fill: '#FFFFFF' }}
                 />
                 {/* Axe Y (masqué) */}
                 <YAxis hide />
                 {/* Info-bulle */}
                 <Tooltip
-    contentStyle={{
-        backgroundColor: '#FFFFFF',
-        color: '#000000',
-        borderRadius: 5,
-        fontSize: 12,
-    }}
-    formatter={(value, name) => {
-        if (name === "sessionLength") {
-            return `${value} min`;
-        }
-        return value;
-    }}
-    labelFormatter={() => ''}
-    cursor={{
-        stroke: '#E60000',
-        strokeWidth: 2,
-    }}
-/>
+                  contentStyle={{
+                    backgroundColor: '#FFFFFF',
+                    color: '#000000',
+                    borderRadius: 5,
+                    fontSize: 10,
+                  }}
+                  formatter={(value, name) => {
+                    if (name === "sessionLength") {
+                        return `${value} min`;
+                    }
+                    return value;
+                  }}
+                  labelFormatter={() => ''}
+                  cursor={{
+                    stroke: '#E60000',
+                    strokeWidth: 2,
+                  }}
+                />
                 {/* Ligne */}
                 <Line
                   type="monotone"
@@ -58,7 +58,7 @@ const Graphics = () => {
                   stroke="#FFFFFF"
                   strokeWidth={2}
                   dot={false}
-                  activeDot={{ r: 8, fill: '#FFFFFF', stroke: '#E60000', strokeWidth: 2 }}
+                  activeDot={{ r: 6, fill: '#FFFFFF', stroke: '#E60000', strokeWidth: 2 }}
                 />
               </LineChart>
             </ResponsiveContainer>

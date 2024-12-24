@@ -13,7 +13,7 @@ const DailyActivity = () => {
     return (
         <div className="activity-chart">
             {data.length > 0 ? (
-                <ResponsiveContainer width="70%" height={300}>
+                <ResponsiveContainer width="100%" height={300}>
                     <BarChart 
                         data={data} 
                         margin={{ top: 20, right: 20, left: 20, bottom: 20 }}

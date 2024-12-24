@@ -1,8 +1,13 @@
 .radar-chart {
     background-color: #333333; // Fond gris foncé
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     color: #FFFFFF; // Texte blanc
     margin: 20px auto;
-    width: 30%; // Limite la largeur à 30%
+    width: 258px; // Limite la largeur à 258px
+    height: 258px; // Limite la hauteur à 258px
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Centrer les éléments horizontalement
+    justify-content: center; // Centrer les éléments verticalement
 }
