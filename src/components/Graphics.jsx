@@ -33,24 +33,22 @@ const Graphics = () => {
                 <YAxis hide />
                 {/* Info-bulle */}
                 <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#FFFFFF',
-                    color: '#000000',
-                    borderRadius: 5,
-                    fontSize: 10,
-                  }}
-                  formatter={(value, name) => {
-                    if (name === "sessionLength") {
-                        return `${value} min`;
-                    }
-                    return value;
-                  }}
-                  labelFormatter={() => ''}
-                  cursor={{
-                    stroke: '#E60000',
-                    strokeWidth: 2,
-                  }}
-                />
+  contentStyle={{
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
+    fontSize: 10,
+    padding: '5px 10px',
+    color: 'black'  // Texte en noir
+
+  // Pourquoi ca ne marche pas ?? 
+  }}
+  formatter={(value) => [`${value} min`]}  // Affiche uniquement la valeur suivie de "min"
+  labelFormatter={() => ''}  // Supprime le label
+  cursor={{
+    stroke: '#E60000',
+    strokeWidth: 2,
+  }}
+/>
                 {/* Ligne */}
                 <Line
                   type="monotone"
