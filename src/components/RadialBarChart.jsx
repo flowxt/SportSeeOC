@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { RadialBarChart, RadialBar, ResponsiveContainer, PolarAngleAxis } from 'recharts';
-import userData from '../mocks/user.json';
+import { getUserById } from '../services/api';
 
 const RadialBarChartComponent = () => {
     const [score, setScore] = useState(0);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        setScore(userData.todayScore);
+        const fetchData = async () => {
+            try {
+                const userData = await getUserById(12); // Remplacez 12 par l'ID utilisateur approprié
+                setScore(userData.todayScore);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                setError('Erreur lors du chargement des données');
+            }
+        };
+
+        fetchData();
     }, []);
 
     const data = [
@@ -16,6 +27,10 @@ const RadialBarChartComponent = () => {
             fill: '#E60000',
         },
     ];
+
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     return (
         <div className="radial-bar-chart">

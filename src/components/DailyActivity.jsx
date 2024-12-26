@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import activityData from '../mocks/activity.json';
+import { getUserActivityById } from '../services/api';
 
 const DailyActivity = () => {
     const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
 
-    // Charge les données mockées au chargement du composant
     useEffect(() => {
-        setData(activityData.sessions); // A Adapter selon la structure réelle de mon fichier JSON que j'aurai en back end
+        const fetchData = async () => {
+            try {
+                const activityData = await getUserActivityById(12); // Remplacez 12 par l'ID utilisateur approprié
+                setData(activityData.sessions);
+            } catch (error) {
+                console.error('Error fetching activity data:', error);
+                setError('Erreur lors du chargement des données');
+            }
+        };
+
+        fetchData();
     }, []);
+
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     return (
         <div className="activity-chart">
@@ -20,16 +34,13 @@ const DailyActivity = () => {
                         barGap={8}
                         barCategoryGap="30%"
                     >
-                        {/* Axe X avec formatage des jours */}
                         <XAxis 
                             dataKey="day" 
-                            tickFormatter={(day) => day.slice(-1)} // Affiche uniquement le dernier chiffre du jour
+                            tickFormatter={(day) => day.slice(-1)} 
                             tickLine={false} 
                             tick={{ fontSize: 12 }} 
                             stroke="#9B9EAC" 
                         />
-                        
-                        {/* Axe Y Poids */}
                         <YAxis 
                             yAxisId="kg" 
                             orientation="right" 
@@ -37,14 +48,10 @@ const DailyActivity = () => {
                             tickLine={false} 
                             tick={{ fontSize: 12, fill: '#9B9EAC' }} 
                         />
-                        
-                        {/* Axe Y Calories (masqué) */}
                         <YAxis 
                             yAxisId="calories" 
                             hide 
                         />
-                        
-                        {/* Tooltip */}
                         <Tooltip 
                             contentStyle={{ backgroundColor: "#E60000", color: "white", borderRadius: 5 }}
                             itemStyle={{ color: "white", fontSize: 12 }}
@@ -54,8 +61,6 @@ const DailyActivity = () => {
                                 return value;
                             }}
                         />
-                        
-                        {/* Légende personnalisée */}
                         <Legend 
                             verticalAlign="top" 
                             align="right" 
@@ -67,8 +72,6 @@ const DailyActivity = () => {
                                 return value;
                             }}
                         />
-                        
-                        {/* Barres */}
                         <Bar 
                             yAxisId="kg" 
                             dataKey="kilogram" 
