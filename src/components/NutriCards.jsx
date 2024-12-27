@@ -31,6 +31,7 @@ const NutriCards = () => {
 
     return (
         <div className="nutri-cards">
+            {/* Je vérifie si keyData existe avant de créer les cartes */}
             {keyData && (
                 <>
                     <NutriCard image={caloriesIcon} value={keyData.calorieCount} unit="kCal" label="Calories" />
