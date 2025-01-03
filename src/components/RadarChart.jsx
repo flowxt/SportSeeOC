@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-import { getUserPerformance } from '../services/api';
+import DataService from '../services/DataService';
 
-const RadarChartComponent = () => {
+const RadarChartComponent = ({ useAPI }) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
+    const dataService = new DataService(useAPI);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const performanceData = await getUserPerformance(12);
-                // Inverser l'ordre des données pour l'affichage correct
+                const performanceData = await dataService.getUserPerformance(12);
                 const formattedData = performanceData.data
                     .map(item => ({
                         value: item.value,
@@ -25,41 +25,27 @@ const RadarChartComponent = () => {
         };
 
         fetchData();
-    }, []);
+    }, [dataService]);
 
     if (error) {
         return <p>{error}</p>;
     }
 
-    // Vérifier si les données sont disponibles
     if (data.length === 0) {
         return <p>Chargement...</p>;
     }
 
     return (
         <div className="radar-chart" style={{ width: '258px', height: '263px', background: '#282D30', borderRadius: '5px' }}>
-        <ResponsiveContainer width="100%" height="100%">
-            <RadarChart outerRadius="70%" data={data}>
-                <PolarGrid 
-                    gridType="polygon"
-                    radialLines={false}
-                    polarLines={false}
-                />
-                <PolarAngleAxis 
-                    dataKey="kind" 
-                    tick={{ fill: '#FFFFFF', fontSize: 12 }}
-                    tickLine={false}
-                />
-                <PolarRadiusAxis tick={false} axisLine={false} />
-                <Radar 
-                    dataKey="value" 
-                    stroke="#FF0101" 
-                    fill="#FF0101" 
-                    fillOpacity={0.7}
-                />
-            </RadarChart>
-        </ResponsiveContainer>
-    </div>
+            <ResponsiveContainer width="100%" height="100%">
+                <RadarChart outerRadius="70%" data={data}>
+                    <PolarGrid gridType="polygon" radialLines={false} polarLines={false} />
+                    <PolarAngleAxis dataKey="kind" tick={{ fill: '#FFFFFF', fontSize: 12 }} tickLine={false} />
+                    <PolarRadiusAxis tick={false} axisLine={false} />
+                    <Radar dataKey="value" stroke="#FF0101" fill="#FF0101" fillOpacity={0.7} />
+                </RadarChart>
+            </ResponsiveContainer>
+        </div>
     );
 };
 

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { getUserById } from '../services/api';
+import DataService from '../services/DataService';
 
-const UserInfo = () => {
+const UserInfo = ({ useAPI }) => {
     const [userInfo, setUserInfo] = useState({});
     const [error, setError] = useState(null);
+    const dataService = new DataService(useAPI);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userData = await getUserById(12); // je peux remplacer 12 par l'ID utilisateur approprié (12 ou 18 seulement)
+                const userData = await dataService.getUserById(12); // Remplacez 12 par l'ID utilisateur approprié
+                console.log('User data:', userData); // Log pour vérifier les données
                 setUserInfo(userData.userInfos);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -17,7 +19,7 @@ const UserInfo = () => {
         };
 
         fetchData();
-    }, []);
+    }, [dataService]);
 
     if (error) {
         return <p>{error}</p>;

@@ -9,32 +9,26 @@ import RadialBarChartComponent from '../components/RadialBarChart';
 import NutriCards from '../components/NutriCards';
 
 const Accueil = () => {
+    const useAPI = true; // Je change entre  cette valeur pour basculer entre API et mocks
+
     return (
         <div className="main-layout">
-            {/* Barre de navigation horizontale */}
             <HorizontalNavBar />
-
             <div className="main-content">
-                {/* Barre de navigation verticale */}
                 <VerticalNavBar />
-
-                {/* Section dashboard : pour les graphiques et les données utilisateur */}
                 <div className="dashboard">
-                    {/* Informations utilisateur */}
-                    <UserInfo />
-                    
-                    {/* Activité quotidienne et cartes nutritionnelles */}
+                    <UserInfo useAPI={useAPI} />
                     <div className="main-content-row">
                         <div className="main-content-left">
-                            <DailyActivity />
+                            <DailyActivity useAPI={useAPI} />
                             <div className="charts">
-                                <Graphics />
-                                <RadarChartComponent />
-                                <RadialBarChartComponent />
+                                <Graphics useAPI={useAPI} />
+                                <RadarChartComponent useAPI={useAPI} />
+                                <RadialBarChartComponent useAPI={useAPI} />
                             </div>
                         </div>
                         <div className="nutri-cards-column">
-                            <NutriCards />
+                            <NutriCards useAPI={useAPI} />
                         </div>
                     </div>
                 </div>

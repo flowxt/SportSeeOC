@@ -1,40 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-// J'importe la fonction pour récupérer les données d'activité de l'utilisateur
-import { getUserActivityById } from '../services/api';
+import DataService from '../services/DataService';
 
-const DailyActivity = () => {
-     // Je définis un état local pour stocker les données
+const DailyActivity = ({ useAPI }) => {
     const [data, setData] = useState([]);
-    // Je définis un état local pour une éventuelle erreur
     const [error, setError] = useState(null);
     const userId = 12; // ID utilisateur fixe
+    const dataService = new DataService(useAPI);
 
     useEffect(() => {
-        // Ici je lance ma fonction asynchrone pour récupérer et traiter les données
         const fetchData = async () => {
             try {
-                // Appel de l'API pour récupérer l'activité de l'utilisateur
-                const activityData = await getUserActivityById(userId);
-                // Conserve uniquement les 10 derniers jours
+                const activityData = await dataService.getUserActivityById(userId);
                 const last10Days = activityData.sessions.slice(-10);
-                // On stocke les données dans l'état local
                 setData(last10Days);
             } catch (err) {
-                // En cas d'erreur, je l'affiche dans la console et je met un message d'erreur
                 console.error('Error fetching activity data:', err);
                 setError('Erreur lors du chargement des données');
             }
         };
-// Je lance la récupération des données
+
         fetchData();
-    }, [userId]);// userId est la dépendance du useEffect
+    }, [dataService, userId]);
 
     if (error) {
         return <p>{error}</p>;
     }
 
-    // Je retourne le composant graphique depuis l'exemple de la documentation
     return (
         <div className="activity-chart">
             {data.length > 0 ? (
@@ -71,10 +63,9 @@ const DailyActivity = () => {
                                 border: 'none',
                                 padding: '10px',
                                 textAlign: 'center'
-                                
                             }}
                             itemStyle={{
-                                color: '#FFFFFF',
+                                color: '#000000',
                                 fontSize: '12px',
                                 padding: '5px 0',
                                 display: 'block'
@@ -126,7 +117,6 @@ const DailyActivity = () => {
 };
 
 export default DailyActivity;
-
 // Si on veut 10j sur le graphique 
 // import React, { useState, useEffect } from 'react';
 // import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';

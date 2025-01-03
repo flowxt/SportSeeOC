@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-// On importe la fonction pour récupérer les sessions moyennes depuis l'API
-import { getUserAverageSession } from '../services/api';
+import DataService from '../services/DataService';
 
-const Graphics = () => {
-    // État local pour stocker les données
+const Graphics = ({ useAPI }) => {
     const [data, setData] = useState([]);
-    // État local pour gérer une éventuelle erreur
     const [error, setError] = useState(null);
+    const dataService = new DataService(useAPI);
 
     useEffect(() => {
-        // On récupère et formate les données au montage du composant
         const fetchData = async () => {
             try {
-                const sessionData = await getUserAverageSession(12);
+                const sessionData = await dataService.getUserAverageSession(12);
                 const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-                // On remplace le numéro du jour par la lettre correspondante
                 const formattedData = sessionData.sessions.map((session) => ({
                     ...session,
                     day: days[session.day - 1],
@@ -27,9 +23,8 @@ const Graphics = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [dataService]);
 
-    // Affiche l’erreur si elle existe
     if (error) {
         return <p>{error}</p>;
     }
@@ -40,37 +35,10 @@ const Graphics = () => {
             {data.length > 0 ? (
                 <ResponsiveContainer width="100%" height="80%">
                     <LineChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
-                        {/* Axe X : Jours */}
-                        <XAxis
-                            dataKey="day"
-                            tickLine={false}
-                            axisLine={false}
-                            tick={{ fontSize: 10, fill: '#FFFFFF' }}
-                        />
-                        {/* Axe Y (caché) */}
+                        <XAxis dataKey="day" tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: '#FFFFFF' }} />
                         <YAxis hide />
-                        {/* Tooltip */}
-                        <Tooltip
-                            contentStyle={{
-                                backgroundColor: '#FFFFFF',
-                                borderRadius: 5,
-                                fontSize: 10,
-                                padding: '5px 10px',
-                                color: 'black'
-                            }}
-                            formatter={(value) => [`${value} min`]}
-                            labelFormatter={() => ''}
-                            cursor={{ stroke: '#E60000', strokeWidth: 2 }}
-                        />
-                        {/* Ligne représentant la durée moyenne */}
-                        <Line
-                            type="monotone"
-                            dataKey="sessionLength"
-                            stroke="#FFFFFF"
-                            strokeWidth={2}
-                            dot={false}
-                            activeDot={{ r: 4 }}
-                        />
+                        <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderRadius: 5, fontSize: 10, padding: '5px 10px', color: 'black' }} formatter={(value) => [`${value} min`]} labelFormatter={() => ''} cursor={{ stroke: '#E60000', strokeWidth: 2 }} />
+                        <Line type="monotone" dataKey="sessionLength" stroke="#FFFFFF" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
                     </LineChart>
                 </ResponsiveContainer>
             ) : (

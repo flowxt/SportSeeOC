@@ -4,16 +4,17 @@ import caloriesIcon from '../assets/calories-icon.png';
 import proteinIcon from '../assets/protein-icon.png';
 import carbsIcon from '../assets/carbs-icon.png';
 import fatIcon from '../assets/fat-icon.png';
-import { getUserById } from '../services/api';
+import DataService from '../services/DataService';
 
-const NutriCards = () => {
+const NutriCards = ({ useAPI }) => {
     const [keyData, setKeyData] = useState({});
     const [error, setError] = useState(null);
+    const dataService = new DataService(useAPI);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userData = await getUserById(12); // Remplacez 12 par l'ID utilisateur approprié
+                const userData = await dataService.getUserById(12); // Remplacez 12 par l'ID utilisateur approprié
                 console.log('User data:', userData); // Log pour vérifier les données
                 setKeyData(userData.keyData);
             } catch (error) {
@@ -23,7 +24,7 @@ const NutriCards = () => {
         };
 
         fetchData();
-    }, []);
+    }, [dataService]);
 
     if (error) {
         return <p>{error}</p>;
@@ -31,7 +32,6 @@ const NutriCards = () => {
 
     return (
         <div className="nutri-cards">
-            {/* Je vérifie si keyData existe avant de créer les cartes */}
             {keyData && (
                 <>
                     <NutriCard image={caloriesIcon} value={keyData.calorieCount} unit="kCal" label="Calories" />
