@@ -8,7 +8,7 @@ const UserInfo = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userData = await getUserById(12); // Remplacez 12 par l'ID utilisateur approprié (12 ou 18 seulement)
+                const userData = await getUserById(12); // je peux remplacer 12 par l'ID utilisateur approprié (12 ou 18 seulement)
                 setUserInfo(userData.userInfos);
             } catch (error) {
                 console.error('Error fetching user data:', error);
