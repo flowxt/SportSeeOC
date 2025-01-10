@@ -13,6 +13,7 @@ const Accueil = () => {
 
     return (
         <div className="main-layout">
+            
             <HorizontalNavBar />
             <div className="main-content">
                 <VerticalNavBar />
