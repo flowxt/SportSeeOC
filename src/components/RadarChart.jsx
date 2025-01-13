@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import DataService from '../services/DataService';
 
-const RadarChartComponent = ({ useAPI }) => {
+const RadarChartComponent = ({ useAPI, userId }) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const dataService = new DataService(useAPI);
@@ -10,7 +10,7 @@ const RadarChartComponent = ({ useAPI }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const performanceData = await dataService.getUserPerformance(12);
+                const performanceData = await dataService.getUserPerformance(userId);
                 const formattedData = performanceData.map(item => ({
                     value: item.value,
                     kind: item.kind
@@ -23,7 +23,7 @@ const RadarChartComponent = ({ useAPI }) => {
         };
 
         fetchData();
-    }, [dataService]);
+    }, [dataService, userId]);
 
     if (error) {
         return <p>{error}</p>;

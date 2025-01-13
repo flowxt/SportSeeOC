@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import DataService from '../services/DataService';
 
-const DailyActivity = ({ useAPI }) => {
+const DailyActivity = ({ useAPI, userId }) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
-    const userId = 12;
     const dataService = new DataService(useAPI);
 
     useEffect(() => {

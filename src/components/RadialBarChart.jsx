@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { RadialBarChart, RadialBar, ResponsiveContainer, PolarAngleAxis } from 'recharts';
 import DataService from '../services/DataService';
 
-const RadialBarChartComponent = ({ useAPI }) => {
+const RadialBarChartComponent = ({ useAPI, userId }) => {
     const [score, setScore] = useState(0);
     const [error, setError] = useState(null);
     const dataService = new DataService(useAPI);
@@ -10,7 +10,7 @@ const RadialBarChartComponent = ({ useAPI }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userData = await dataService.getUserById(12);
+                const userData = await dataService.getUserById(userId);
                 setScore(userData.todayScore);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -19,7 +19,7 @@ const RadialBarChartComponent = ({ useAPI }) => {
         };
 
         fetchData();
-    }, [dataService]);
+    }, [dataService, userId]);
 
     const data = [
         {

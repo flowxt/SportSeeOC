@@ -9,27 +9,27 @@ import RadialBarChartComponent from '../components/RadialBarChart';
 import NutriCards from '../components/NutriCards';
 
 const Accueil = () => {
-    const useAPI = true; // Je change entre  cette valeur pour basculer entre API et mocks
+    const useAPI = true; // Je change entre cette valeur pour basculer entre API et mocks
+    const userId = 12; // Changez cette valeur pour basculer entre les utilisateurs (12 et 18)
 
     return (
         <div className="main-layout">
-
             <HorizontalNavBar />
             <div className="main-content">
                 <VerticalNavBar />
                 <div className="dashboard">
-                    <UserInfo useAPI={useAPI} />
+                    <UserInfo useAPI={useAPI} userId={userId} />
                     <div className="main-content-row">
                         <div className="main-content-left">
-                            <DailyActivity useAPI={useAPI} />
+                            <DailyActivity useAPI={useAPI} userId={userId} />
                             <div className="charts">
-                                <Graphics useAPI={useAPI} />
-                                <RadarChartComponent useAPI={useAPI} />
-                                <RadialBarChartComponent useAPI={useAPI} />
+                                <Graphics useAPI={useAPI} userId={userId} />
+                                <RadarChartComponent useAPI={useAPI} userId={userId} />
+                                <RadialBarChartComponent useAPI={useAPI} userId={userId} />
                             </div>
                         </div>
                         <div className="nutri-cards-column">
-                            <NutriCards useAPI={useAPI} />
+                            <NutriCards useAPI={useAPI} userId={userId} />
                         </div>
                     </div>
                 </div>

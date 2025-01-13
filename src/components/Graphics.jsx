@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import DataService from '../services/DataService';
 
-const Graphics = ({ useAPI }) => {
+const Graphics = ({ useAPI, userId }) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const dataService = new DataService(useAPI);
@@ -10,7 +10,7 @@ const Graphics = ({ useAPI }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const sessionData = await dataService.getUserAverageSession(12);
+                const sessionData = await dataService.getUserAverageSession(userId);
                 const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
                 const formattedData = sessionData.map((session) => ({
                     ...session,
@@ -23,7 +23,7 @@ const Graphics = ({ useAPI }) => {
             }
         };
         fetchData();
-    }, [dataService]);
+    }, [dataService, userId]);
 
     if (error) {
         return <p>{error}</p>;

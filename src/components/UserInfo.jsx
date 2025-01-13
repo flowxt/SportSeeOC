@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DataService from '../services/DataService';
 
-const UserInfo = ({ useAPI }) => {
+const UserInfo = ({ useAPI, userId }) => {
     const [userInfo, setUserInfo] = useState({});
     const [error, setError] = useState(null);
     const dataService = new DataService(useAPI);
@@ -9,7 +9,7 @@ const UserInfo = ({ useAPI }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userData = await dataService.getUserById(12);
+                const userData = await dataService.getUserById(userId);
                 setUserInfo(userData);
             } catch (error) {
                 console.error('Error fetching user data:', error);

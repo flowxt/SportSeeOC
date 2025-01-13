@@ -6,7 +6,7 @@ import carbsIcon from '../assets/carbs-icon.png';
 import fatIcon from '../assets/fat-icon.png';
 import DataService from '../services/DataService';
 
-const NutriCards = ({ useAPI }) => {
+const NutriCards = ({ useAPI, userId }) => {
     const [keyData, setKeyData] = useState({});
     const [error, setError] = useState(null);
     const dataService = new DataService(useAPI);
@@ -14,7 +14,7 @@ const NutriCards = ({ useAPI }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userData = await dataService.getUserById(12);
+                const userData = await dataService.getUserById(userId);
                 setKeyData(userData.keyData);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -23,7 +23,7 @@ const NutriCards = ({ useAPI }) => {
         };
 
         fetchData();
-    }, [dataService]);
+    }, [dataService, userId]);
 
     if (error) {
         return <p>{error}</p>;
