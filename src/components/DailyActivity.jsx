@@ -3,37 +3,31 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } fro
 import DataService from '../services/DataService';
 
 const DailyActivity = ({ useAPI }) => {
-    const [data, setData] = useState([]); //Etat pour stocker les données d'activité
-    const [error, setError] = useState(null); //Etat pour stocker les erreurs eventuelles
-    const userId = 12; // ID utilisateur fixe
-    const dataService = new DataService(useAPI); // Instance du service de données
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    const userId = 12;
+    const dataService = new DataService(useAPI);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Je récupère les données d'activité de l'utilisateur
                 const activityData = await dataService.getUserActivityById(userId);
-                // Je prends les 10 derniers jours d'activité
-                const last10Days = activityData.sessions.slice(-10);
+                const last10Days = activityData.slice(-10);
                 setData(last10Days);
             } catch (err) {
-                // En cas d'erreur, j'affiche un message d'erreur
                 console.error('Error fetching activity data:', err);
                 setError('Erreur lors du chargement des données');
             }
         };
 
         fetchData();
-    }, [dataService, userId]); // Le tableau de dépendances inclut dataService et userId
+    }, [dataService, userId]);
 
     if (error) {
-        // Si une erreur s'est produite, j'affiche un message d'erreur sur la page
         return <p>{error}</p>;
     }
 
     return (
-
-        // Ici j'importe ma bibliotheque de Recharts pour afficher les données d'activité
         <div className="activity-chart">
             {data.length > 0 ? (
                 <ResponsiveContainer width="100%" height={300}>
@@ -43,7 +37,6 @@ const DailyActivity = ({ useAPI }) => {
                         barGap={8}
                         barCategoryGap="30%"
                     >
-                        {/* Axe X : affiche la dernière lettre/chiffre du champ "day" */}
                         <XAxis
                             dataKey="day"
                             tickFormatter={(day) => day.slice(-1)}
@@ -51,7 +44,6 @@ const DailyActivity = ({ useAPI }) => {
                             tick={{ fontSize: 12 }}
                             stroke="#9B9EAC"
                         />
-                        {/* Axe Y Poids */}
                         <YAxis
                             yAxisId="kg"
                             orientation="right"
@@ -59,10 +51,7 @@ const DailyActivity = ({ useAPI }) => {
                             tickLine={false}
                             tick={{ fontSize: 12, fill: '#9B9EAC' }}
                         />
-                        {/* Axe Y Calories (masqué) */}
                         <YAxis yAxisId="calories" hide />
-
-                        {/* Infobulle Personnalisée */}
                         <Tooltip
                             contentStyle={{
                                 backgroundColor: 'white',
@@ -84,8 +73,6 @@ const DailyActivity = ({ useAPI }) => {
                             labelFormatter={() => ''}
                             separator=""
                         />
-
-                        {/* Légende Personnalisée */}
                         <Legend
                             verticalAlign="top"
                             align="right"
@@ -97,8 +84,6 @@ const DailyActivity = ({ useAPI }) => {
                                 return value;
                             }}
                         />
-
-                        {/* Barres */}
                         <Bar
                             yAxisId="kg"
                             dataKey="kilogram"
@@ -116,7 +101,6 @@ const DailyActivity = ({ useAPI }) => {
                     </BarChart>
                 </ResponsiveContainer>
             ) : (
-                // J'affiche un message de chargement si les données ne sont pas encore chargées
                 <p>Chargement des données...</p>
             )}
         </div>

@@ -9,9 +9,8 @@ const UserInfo = ({ useAPI }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userData = await dataService.getUserById(12); // Remplacez 12 par l'ID utilisateur approprié
-                console.log('User data:', userData); // Log pour vérifier les données
-                setUserInfo(userData.userInfos);
+                const userData = await dataService.getUserById(12);
+                setUserInfo(userData);
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 setError('Erreur lors du chargement des données');

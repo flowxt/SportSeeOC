@@ -3,25 +3,23 @@ import userMock from "../mocks/user.json";
 import activityMock from "../mocks/activity.json";
 import averageSessionsMock from "../mocks/average-sessions.json";
 import performanceMock from "../mocks/performance.json";
+import { User } from "./User";
+import { Activity } from "./Activity";
+import { Performance } from "./Performance";
 
-//URL de base de l'API
 const API_URL = "http://localhost:3000";
 
-// Constructeur de la classe, prend un booléen pour déterminer si l'API doit être utilisée
 class DataService {
   constructor(useAPI) {
     this.useAPI = useAPI;
   }
 
-  // Méthode pour obtenir les informations d'un utilisateur par son ID
   async getUserById(userId) {
     if (this.useAPI) {
       try {
-        // Requête à l'API pour obtenir les données de l'utilisateur
         const response = await axios.get(`${API_URL}/user/${userId}`);
-        return response.data.data;
+        return new User(response.data.data);
       } catch (error) {
-        // En cas d'erreur, utiliser les données mock
         console.error(
           "Error fetching user data from API, using mock data:",
           error
@@ -30,82 +28,77 @@ class DataService {
         if (!user) {
           throw new Error(`User with id ${userId} not found in mock data`);
         }
-        return user;
+        return new User(user);
       }
     } else {
-      // Si l'API n'est pas utilisée, retourner les données mock
       const user = userMock.find((user) => user.id === userId);
       if (!user) {
         throw new Error(`User with id ${userId} not found in mock data`);
       }
-      return user;
+      return new User(user);
     }
   }
 
-  // Méthode pour obtenir les activités d'un utilisateur par son ID
   async getUserActivityById(userId) {
     if (this.useAPI) {
       try {
-        // Requête à l'API pour obtenir les données d'activité de l'utilisateur
         const response = await axios.get(`${API_URL}/user/${userId}/activity`);
-        return response.data.data;
+        return response.data.data.sessions.map(
+          (activity) => new Activity(activity)
+        );
       } catch (error) {
-        // En cas d'erreur, utiliser les données mock
         console.error(
           "Error fetching user activity from API, using mock data:",
           error
         );
-        return activityMock;
+        return activityMock.sessions.map((activity) => new Activity(activity));
       }
     } else {
-      // Si l'API n'est pas utilisée, retourner les données mock
-      return activityMock;
+      return activityMock.sessions.map((activity) => new Activity(activity));
     }
   }
 
-  // Méthode pour obtenir les sessions moyennes d'un utilisateur par son ID
   async getUserAverageSession(userId) {
     if (this.useAPI) {
       try {
-        // Requête à l'API pour obtenir les sessions moyennes de l'utilisateur
         const response = await axios.get(
           `${API_URL}/user/${userId}/average-sessions`
         );
-        return response.data.data;
+        return response.data.data.sessions;
       } catch (error) {
-        // En cas d'erreur, utiliser les données mock
         console.error(
           "Error fetching user average sessions from API, using mock data:",
           error
         );
-        return averageSessionsMock;
+        return averageSessionsMock.sessions;
       }
     } else {
-      // Si l'API n'est pas utilisée, retourner les données mock
-      return averageSessionsMock;
+      return averageSessionsMock.sessions;
     }
   }
 
-  // Méthode pour obtenir les performances d'un utilisateur par son ID
   async getUserPerformance(userId) {
     if (this.useAPI) {
       try {
-        // Requête à l'API pour obtenir les performances de l'utilisateur
         const response = await axios.get(
           `${API_URL}/user/${userId}/performance`
         );
-        return response.data.data;
+        return response.data.data.data.map(
+          (performance) => new Performance(performance)
+        );
       } catch (error) {
-        // En cas d'erreur, utiliser les données mock
         console.error(
           "Error fetching user performance from API, using mock data:",
           error
         );
-        return performanceMock;
+        return performanceMock.data.map(
+          (performance) => new Performance(performance)
+        );
       }
     } else {
-      // Si l'API n'est pas utilisée, retourner les données mock
-      return performanceMock;
+      return performanceMock.data.map(
+        (performance) => new Performance(performance)
+      );
     }
   }
 }

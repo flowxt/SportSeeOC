@@ -10,7 +10,7 @@ const RadialBarChartComponent = ({ useAPI }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userData = await dataService.getUserById(12); // Remplacez 12 par l'ID utilisateur approprié
+                const userData = await dataService.getUserById(12);
                 setScore(userData.todayScore);
             } catch (error) {
                 console.error('Error fetching user data:', error);
