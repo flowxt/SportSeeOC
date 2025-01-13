@@ -18,7 +18,7 @@ const UserInfo = ({ useAPI, userId }) => {
         };
 
         fetchData();
-    }, [dataService]);
+    }, [dataService, userId]);
 
     if (error) {
         return <p>{error}</p>;
