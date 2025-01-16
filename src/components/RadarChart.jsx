@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import DataService from '../services/DataService';
 
+const kindMapping = {
+    1: "Cardio",
+    2: "Energie",
+    3: "Endurance",
+    4: "Force",
+    5: "Vitesse",
+    6: "Intensité"
+};
+
 const RadarChartComponent = ({ useAPI, userId }) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
@@ -13,7 +22,7 @@ const RadarChartComponent = ({ useAPI, userId }) => {
                 const performanceData = await dataService.getUserPerformance(userId);
                 const formattedData = performanceData.map(item => ({
                     value: item.value,
-                    kind: item.kind
+                    kind: kindMapping[item.kind]
                 })).reverse();
                 setData(formattedData);
             } catch (error) {
