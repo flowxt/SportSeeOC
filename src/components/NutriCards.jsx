@@ -1,29 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import NutriCard from './NutriCard';
 import caloriesIcon from '../assets/calories-icon.png';
 import proteinIcon from '../assets/protein-icon.png';
 import carbsIcon from '../assets/carbs-icon.png';
 import fatIcon from '../assets/fat-icon.png';
-import DataService from '../services/DataService';
+import useFetchData from '../hooks/useFetchData';
 
 const NutriCards = ({ useAPI, userId }) => {
-    const [keyData, setKeyData] = useState({});
-    const [error, setError] = useState(null);
-    const dataService = new DataService(useAPI);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const userData = await dataService.getUserById(userId);
-                setKeyData(userData.keyData);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                setError('Erreur lors du chargement des données');
-            }
-        };
-
-        fetchData();
-    }, [dataService, userId]);
+    const { data: keyData, error } = useFetchData(useAPI, userId, async (dataService, userId) => {
+        const userData = await dataService.getUserById(userId);
+        return userData.keyData;
+    });
 
     if (error) {
         return <p>{error}</p>;

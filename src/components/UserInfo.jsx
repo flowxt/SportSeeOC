@@ -1,24 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import DataService from '../services/DataService';
+import React from 'react';
+import useFetchData from '../hooks/useFetchData';
 
 const UserInfo = ({ useAPI, userId }) => {
-    const [userInfo, setUserInfo] = useState({});
-    const [error, setError] = useState(null);
-    const dataService = new DataService(useAPI);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const userData = await dataService.getUserById(userId);
-                setUserInfo(userData);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                setError('Erreur lors du chargement des données');
-            }
-        };
-
-        fetchData();
-    }, [dataService, userId]);
+    const { data: userInfo, error } = useFetchData(useAPI, userId, async (dataService, userId) => {
+        return await dataService.getUserById(userId);
+    });
 
     if (error) {
         return <p>{error}</p>;

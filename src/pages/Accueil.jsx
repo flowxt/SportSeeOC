@@ -10,7 +10,7 @@ import NutriCards from '../components/NutriCards';
 
 const Accueil = () => {
     const useAPI = true; // Je change entre cette valeur pour basculer entre API et mocks
-    const userId = 18; // Je change la valeur pour basculer entre les utilisateurs (12 et 18)
+    const userId = 12; // Je change la valeur pour basculer entre les utilisateurs (12 et 18)
 
     return (
         <div className="main-layout">

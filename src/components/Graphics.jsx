@@ -1,29 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import DataService from '../services/DataService';
+import useFetchData from '../hooks/useFetchData';
 
 const Graphics = ({ useAPI, userId }) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-    const dataService = new DataService(useAPI);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const sessionData = await dataService.getUserAverageSession(userId);
-                const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
-                const formattedData = sessionData.map((session) => ({
-                    ...session,
-                    day: days[session.day - 1],
-                }));
-                setData(formattedData);
-            } catch (err) {
-                console.error('Error fetching average sessions data:', err);
-                setError('Erreur lors du chargement des données');
-            }
-        };
-        fetchData();
-    }, [dataService, userId]);
+    const { data, error } = useFetchData(useAPI, userId, async (dataService, userId) => {
+        const sessionData = await dataService.getUserAverageSession(userId);
+        const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+        return sessionData.map((session) => ({
+            ...session,
+            day: days[session.day - 1],
+        }));
+    });
 
     if (error) {
         return <p>{error}</p>;

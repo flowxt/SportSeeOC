@@ -1,35 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import DataService from '../services/DataService';
+import useFetchData from '../hooks/useFetchData';
 
-// Composant pour afficher le graphique d'activité quotidienne
 const DailyActivity = ({ useAPI, userId }) => {
-    // État pour stocker les données de l'activité
-    const [data, setData] = useState([]);
-    // État pour gérer les erreurs éventuelles
-    const [error, setError] = useState(null);
-    // Instance du service de données (API ou mock)
-    const dataService = new DataService(useAPI);
-
-    useEffect(() => {
-        // Fonction asynchrone pour récupérer les données
-        const fetchData = async () => {
-            try {
-                 // Récupération des données d'activité via le service
-                const activityData = await dataService.getUserActivityById(userId);
-                 // On conserve uniquement les 10 derniers jours d'activité
-                const last10Days = activityData.slice(-10);
-                // Mise à jour de l'état avec les données
-                setData(last10Days);
-            } catch (err) {
-                // En cas d'erreur, on affiche un message d'erreur et on met à jour l'état
-                console.error('Error fetching activity data:', err);
-                setError('Erreur lors du chargement des données');
-            }
-        };
-
-        fetchData();
-    }, [dataService, userId]); // Le hook se réexécute si dataService ou userId change
+    const { data, error } = useFetchData(useAPI, userId, async (dataService, userId) => {
+        const activityData = await dataService.getUserActivityById(userId);
+        return activityData.slice(-10);
+    });
 
     if (error) {
         return <p>{error}</p>;
