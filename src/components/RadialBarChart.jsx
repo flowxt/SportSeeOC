@@ -3,6 +3,7 @@ import { RadialBarChart, RadialBar, ResponsiveContainer, PolarAngleAxis } from '
 import useFetchData from '../hooks/useFetchData';
 
 const RadialBarChartComponent = ({ useAPI, userId }) => {
+    // J'appelle mon hook personnalisé avec mes 3 paramètres
     const { data: score, error } = useFetchData(useAPI, userId, async (dataService, userId) => {
         const userData = await dataService.getUserById(userId);
         return userData.todayScore;

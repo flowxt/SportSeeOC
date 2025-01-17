@@ -3,9 +3,10 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } fro
 import useFetchData from '../hooks/useFetchData';
 
 const DailyActivity = ({ useAPI, userId }) => {
+    // J'appelle mon hook personnalisé avec mes 3 paramètres
     const { data, error } = useFetchData(useAPI, userId, async (dataService, userId) => {
         const activityData = await dataService.getUserActivityById(userId);
-        return activityData.slice(-10);
+        return activityData.slice(-10); // Je retourne les 10 dernières données (10 derniers jours)
     });
 
     if (error) {
